@@ -263,7 +263,7 @@ paths:
       tags:
       - Groups
   /groups/{group_id}:
-    post:
+    get:
       parameters:
       - in: path
         name: group_id
@@ -285,7 +285,12 @@ paths:
       tags:
       - Groups
     delete:
-      description: Get group by id
+      parameters:
+      - in: path
+        name: group_id
+        type: integer
+        required: true
+      description: Delete group by id
       responses:
         '204': {}
         '404':
@@ -306,6 +311,10 @@ paths:
         name: body
         schema:
           $ref: '#/definitions/AddUserToGroupBody'
+      - in: path
+        name: group_id
+        type: integer
+        required: true
       description: Add user to group
       responses:
         '200':
@@ -329,6 +338,10 @@ paths:
         name: body
         schema:
           $ref: '#/definitions/AddUserToGroupBody'
+      - in: path
+        name: group_id
+        type: integer
+        required: true
       description: Add moderator to group
       responses:
         '200':
@@ -346,6 +359,15 @@ paths:
       - Groups
   /groups/{group_id}/users/{user_id}:
     delete:
+      parameters:
+      - in: path
+        name: user_id
+        type: integer
+        required: true
+      - in: path
+        name: group_id
+        type: integer
+        required: true
       description: Delete user from group
       responses:
         '200':
@@ -363,6 +385,15 @@ paths:
       - Groups
   /groups/{group_id}/moderators/{user_id}:
     delete:
+      parameters:
+      - in: path
+        name: user_id
+        type: integer
+        required: true
+      - in: path
+        name: group_id
+        type: integer
+        required: true
       description: Delete moderator from group
       responses:
         '200':
@@ -380,6 +411,11 @@ paths:
       - Groups
   /groups/{group_id}/moderators/:
     get:
+      parameters:
+      - in: path
+        name: group_id
+        type: integer
+        required: true
       description: Get moderators
       responses:
         '200':
@@ -399,7 +435,12 @@ paths:
       - Groups
   /groups/{group_id}/urls/:
     get:
-      description: Get group"s urls
+      description: Get group's urls
+      parameters:
+      - in: path
+        name: group_id
+        type: integer
+        required: true
       responses:
         '200':
           schema:
@@ -437,6 +478,15 @@ paths:
       - Groups
   /groups/{group_id}/urls/{short_url_id}:
     post:
+      parameters:
+      - in: path
+        name: short_url_id
+        type: integer
+        required: true
+      - in: path
+        name: group_id
+        type: integer
+        required: true
       description: Add short url to group
       responses:
         '200':
@@ -453,6 +503,15 @@ paths:
       tags:
       - Groups
     delete:
+      parameters:
+      - in: path
+        name: short_url_id
+        type: integer
+        required: true
+      - in: path
+        name: group_id
+        type: integer
+        required: true
       description: Delete short url from group
       responses:
         '204': {}
@@ -468,6 +527,11 @@ paths:
       - Groups
   /{short_url}:
     get:
+      parameters:
+      - in: path
+        name: short_url
+        type: string
+        required: true
       description: Redirect to url from short link
       responses:
         '302': {}
