@@ -1,0 +1,627 @@
+paths:
+  /shurls:
+    get:
+      description: Get short links created by current user
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ShurlResponse'
+          '403':
+            description: Forbidden
+            schema: ErrorResponse
+      tags:
+      - Shurls
+    post:
+      parameters:
+      - in: body
+        required: false
+        name: body
+        schema:
+          $ref: '#/definitions/ShurlRequestBody'
+      description: Create short link
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ShurlResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Shurls
+  /shurls/available:
+    get:
+      description: Get all links available to user
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ShurlResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Shurls
+  /shurls/{shurl_id}:
+    get:
+      parameters:
+      - in: path
+        name: shurl_id
+        type: integer
+        required: true
+      description: Get link by id
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ShurlResponse'
+        '404':
+          description: Link not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Shurls
+    delete:
+      parameters:
+      - in: path
+        name: shurl_id
+        type: integer
+        required: true
+      description: Delete link by id
+      responses:
+        '204': {}
+        '404':
+          description: Link not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Shurls
+  /shurls/{short_url}:
+    get:
+      parameters:
+      - in: path
+        name: short_url
+        type: string
+        required: true
+      description: Get link by short_url
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ShurlResponse'
+        '404':
+          description: Link not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Shurls
+    delete:
+      parameters:
+      - in: path
+        name: short_url
+        type: string
+        required: true
+      description: Delete link by short_url
+      responses:
+        '204': {}
+        '404':
+          description: Link not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Shurls
+    patch:
+      parameters:
+      - in: path
+        name: short_url
+        type: string
+        required: true
+      - in: body
+        required: false
+        name: body
+        schema:
+          $ref: '#/definitions/ShurlRequestBody'
+      description: Edit link by short_url
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ShurlResponse'
+        '404':
+          description: Link not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Shurls
+  /shurls/{short_id}:
+    patch:
+      parameters:
+      - in: path
+        name: shurl_id
+        type: integer
+        required: true
+      - in: body
+        required: false
+        name: body
+        schema:
+          $ref: '#/definitions/ShurlRequestBody'
+      description: Edit link by id
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ShurlResponse'
+        '404':
+          description: Link not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Shurls
+  /auth/me:
+    get:
+      description: Get info about current user
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/CurrentUserFullData'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      parameters:
+      - in: body
+        required: false
+        name: body
+        schema:
+          $ref: '#/definitions/RegisterData'
+      description: Register new user
+      responses:
+        '200': {}
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Auth
+  /auth/login:
+    post:
+      parameters:
+      - in: body
+        required: false
+        name: body
+        schema:
+          $ref: '#/definitions/LoginData'
+      description: Login
+      responses:
+        '200': {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Auth
+  /auth/logout:
+    post:
+      description: Logout
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /groups:
+    post:
+      parameters:
+      - in: body
+        required: false
+        name: body
+        schema:
+          $ref: '#/definitions/GroupRequestBody'
+      description: Create group
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/GroupWithUsersResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /groups/{group_id}:
+    post:
+      parameters:
+      - in: path
+        name: group_id
+        type: integer
+        required: true
+      description: Get group by id
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/GroupWithUsersResponse'
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+    delete:
+      description: Get group by id
+      responses:
+        '204': {}
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /groups/{group_id}/users:
+    post:
+      parameters:
+      - in: body
+        required: false
+        name: body
+        schema:
+          $ref: '#/definitions/AddUserToGroupBody'
+      description: Add user to group
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/GroupWithUsersResponse'
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /groups/{group_id}/moderators:
+    post:
+      parameters:
+      - in: body
+        required: false
+        name: body
+        schema:
+          $ref: '#/definitions/AddUserToGroupBody'
+      description: Add moderator to group
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/GroupsOfUserResponse'
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /groups/{group_id}/users/{user_id}:
+    delete:
+      description: Delete user from group
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/GroupWithUsersResponse'
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /groups/{group_id}/moderators/{user_id}:
+    delete:
+      description: Delete moderator from group
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/GroupWithUsersResponse'
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /groups/{group_id}/moderators/:
+    get:
+      description: Get moderators
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GroupsOfUserResponse'
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /groups/{group_id}/urls/:
+    get:
+      description: Get group"s urls
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ShurlResponse'
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /groups/my/:
+    get:
+      description: Get current users"s group
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GroupsOfUserResponse'
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /groups/{group_id}/urls/{short_url_id}:
+    post:
+      description: Add short url to group
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ShurlResponse'
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+    delete:
+      description: Delete short url from group
+      responses:
+        '204': {}
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Groups
+  /{short_url}:
+    get:
+      description: Redirect to url from short link
+      responses:
+        '302': {}
+        '404':
+          description: Group not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      tags:
+      - Redirect
+info:
+  title: Swagger shurls
+  version: 1.0.0
+swagger: '2.0'
+definitions:
+  ShurlResponse:
+    type: object
+    properties:
+      id:
+        type: integer
+      short_url:
+        type: string
+      url:
+        type: string
+        format: url
+      visibility_type:
+        type: string
+        enum:
+        - private
+        - public
+        - protected
+  ShurlRequestBody:
+    type: object
+    properties:
+      short_url:
+        type: string
+      url:
+        type: string
+        format: url
+      visibility_type:
+        type: string
+        enum:
+        - private
+        - public
+        - protected
+    required:
+    - url
+  ErrorResponse:
+    type: object
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+  GroupsOfUserResponse:
+    type: object
+    properties:
+      group_id:
+        type: integer
+      role:
+        type: string
+        enum:
+        - admin
+        - moderator
+        - user
+      group_name:
+        type: string
+      user_id:
+        type: integer
+  CurrentUserFullData:
+    type: object
+    properties:
+      id:
+        type: integer
+      email:
+        type: string
+        format: email
+      username:
+        type: string
+      shurls:
+        type: array
+        items:
+          $ref: '#/definitions/ShurlResponse'
+      groups:
+        type: array
+        items:
+          $ref: '#/definitions/GroupsOfUserResponse'
+  RegisterData:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+    required:
+    - email
+    - password
+    - username
+  LoginData:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+    required:
+    - password
+    - username
+  GroupRequestBody:
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+    - name
+  GroupUser:
+    type: object
+    properties:
+      id:
+        type: integer
+      group_id:
+        type: integer
+      role:
+        type: string
+        enum:
+        - admin
+        - moderator
+        - user
+      user_id:
+        type: integer
+  GroupWithUsersResponse:
+    type: object
+    properties:
+      creator:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      users:
+        type: array
+        items:
+          $ref: '#/definitions/GroupUser'
+  AddUserToGroupBody:
+    type: object
+    properties:
+      username:
+        type: string
+    required:
+    - username
+
