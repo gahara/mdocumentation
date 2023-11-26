@@ -1,7 +1,18 @@
 paths:
   /shurls:
     get:
-      description: Get short links created by current user
+      summary: Get short links created by current user
+      parameters:
+      - &id001
+        in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - &id002
+        in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
       responses:
         '200':
           schema:
@@ -20,7 +31,14 @@ paths:
         name: body
         schema:
           $ref: '#/definitions/ShurlRequestBody'
-      description: Create short link
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - *id001
+      - *id002
+      summary: Create short link
       responses:
         '200':
           schema:
@@ -33,7 +51,16 @@ paths:
       - Shurls
   /shurls/available:
     get:
-      description: Get all links available to user
+      summary: Get all links available to user
+      parameters:
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
       responses:
         '200':
           schema:
@@ -53,7 +80,15 @@ paths:
         name: shurl_id
         type: integer
         required: true
-      description: Get link by id
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Get link by id
       responses:
         '200':
           schema:
@@ -74,7 +109,20 @@ paths:
         name: shurl_id
         type: integer
         required: true
-      description: Delete link by id
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Delete link by id
       responses:
         '204': {}
         '404':
@@ -94,7 +142,15 @@ paths:
         name: short_url
         type: string
         required: true
-      description: Get link by short_url
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Get link by short_url
       responses:
         '200':
           schema:
@@ -115,7 +171,20 @@ paths:
         name: short_url
         type: string
         required: true
-      description: Delete link by short_url
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Delete link by short_url
       responses:
         '204': {}
         '404':
@@ -139,7 +208,20 @@ paths:
         name: body
         schema:
           $ref: '#/definitions/ShurlRequestBody'
-      description: Edit link by short_url
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Edit link by short_url
       responses:
         '200':
           schema:
@@ -166,7 +248,20 @@ paths:
         name: body
         schema:
           $ref: '#/definitions/ShurlRequestBody'
-      description: Edit link by id
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Edit link by id
       responses:
         '200':
           schema:
@@ -183,7 +278,16 @@ paths:
       - Shurls
   /auth/me:
     get:
-      description: Get info about current user
+      summary: Get info about current user
+      parameters:
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
       responses:
         '200':
           schema:
@@ -202,7 +306,7 @@ paths:
         name: body
         schema:
           $ref: '#/definitions/RegisterData'
-      description: Register new user
+      summary: Register new user
       responses:
         '200': {}
         '409':
@@ -227,7 +331,9 @@ paths:
         name: body
         schema:
           $ref: '#/definitions/LoginData'
-      description: Login
+      summary: Login
+      description: Returns cookies that will further define current user. Use them
+        in protected routes
       responses:
         '200': {}
         '401':
@@ -238,7 +344,7 @@ paths:
       - Auth
   /auth/logout:
     post:
-      description: Logout
+      summary: Logout
       responses:
         '200': {}
       tags:
@@ -251,7 +357,20 @@ paths:
         name: body
         schema:
           $ref: '#/definitions/GroupRequestBody'
-      description: Create group
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Create group
       responses:
         '200':
           schema:
@@ -269,7 +388,15 @@ paths:
         name: group_id
         type: integer
         required: true
-      description: Get group by id
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Get group by id
       responses:
         '200':
           schema:
@@ -290,7 +417,20 @@ paths:
         name: group_id
         type: integer
         required: true
-      description: Delete group by id
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Delete group by id
       responses:
         '204': {}
         '404':
@@ -315,7 +455,20 @@ paths:
         name: group_id
         type: integer
         required: true
-      description: Add user to group
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Add user to group
       responses:
         '200':
           schema:
@@ -342,7 +495,20 @@ paths:
         name: group_id
         type: integer
         required: true
-      description: Add moderator to group
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Add moderator to group
       responses:
         '200':
           schema:
@@ -368,7 +534,20 @@ paths:
         name: group_id
         type: integer
         required: true
-      description: Delete user from group
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Delete user from group
       responses:
         '200':
           schema:
@@ -394,7 +573,20 @@ paths:
         name: group_id
         type: integer
         required: true
-      description: Delete moderator from group
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Delete moderator from group
       responses:
         '200':
           schema:
@@ -416,7 +608,15 @@ paths:
         name: group_id
         type: integer
         required: true
-      description: Get moderators
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Get moderators
       responses:
         '200':
           schema:
@@ -435,11 +635,19 @@ paths:
       - Groups
   /groups/{group_id}/urls/:
     get:
-      description: Get group's urls
+      summary: Get group's urls
       parameters:
       - in: path
         name: group_id
         type: integer
+        required: true
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
         required: true
       responses:
         '200':
@@ -459,7 +667,16 @@ paths:
       - Groups
   /groups/my/:
     get:
-      description: Get current users"s group
+      summary: Get current users's group
+      parameters:
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
       responses:
         '200':
           schema:
@@ -487,7 +704,20 @@ paths:
         name: group_id
         type: integer
         required: true
-      description: Add short url to group
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Add short url to group
       responses:
         '200':
           schema:
@@ -512,7 +742,20 @@ paths:
         name: group_id
         type: integer
         required: true
-      description: Delete short url from group
+      - in: header
+        name: X-CSRF-TOKEN
+        type: string
+        required: true
+        description: equal to csrf_access_token cookie
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Delete short url from group
       responses:
         '204': {}
         '404':
@@ -532,7 +775,15 @@ paths:
         name: short_url
         type: string
         required: true
-      description: Redirect to url from short link
+      - in: cookie
+        name: access_token_cookie
+        type: string
+        required: true
+      - in: cookie
+        name: csrf_access_token
+        type: string
+        required: true
+      summary: Redirect to url from short link
       responses:
         '302': {}
         '404':
